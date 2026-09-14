@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Yokukichi.and.capybara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07040d;
+    --bg-1:#170b2e;
+    --bg-2:#2a1150;
+    --purple:#a855f7;
+    --purple-soft:#c084fc;
+    --blue:#38bdf8;
+    --card:#0f0a1a;
+    --card-border:rgba(168,85,247,0.25);
+    --text:#f4f2fb;
+    --muted:#a79fc2;
+    --muted-2:#8a80ab;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{margin:0;padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse 120% 60% at 50% -10%, var(--bg-2) 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-0) 100%);
+    background-attachment:fixed;
+    color:var(--text);
+    font-family:'Inter','Noto Sans JP',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  .star{
+    position:absolute;
+    background:#fff;
+    border-radius:50%;
+    opacity:0.6;
+    animation:twinkle 4s ease-in-out infinite, drift 40s linear infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:0.15;}
+    50%{opacity:0.85;}
+  }
+  @keyframes drift{
+    from{transform:translateY(0);}
+    to{transform:translateY(-30px);}
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    margin:0 auto;
+    padding:28px 20px 60px;
+  }
+
+  /* top bar */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:36px;
+  }
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    transition:color .2s ease;
+  }
+  .back-link:hover{color:var(--purple-soft);}
+  .back-link svg{width:16px;height:16px;}
+
+  .lang-toggle{
+    display:flex;
+    background:rgba(255,255,255,0.05);
+    border:1px solid var(--card-border);
+    border-radius:999px;
+    padding:3px;
+    gap:2px;
+  }
+  .lang-toggle button{
+    border:none;
+    background:transparent;
+    color:var(--muted);
+    font-family:inherit;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.03em;
+    padding:6px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .lang-toggle button.active{
+    background:linear-gradient(135deg, var(--purple), var(--blue));
+    color:#0a0612;
+  }
+
+  /* hero */
+  .hero{
+    text-align:center;
+    margin-bottom:52px;
+  }
+  .hero .mark{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:84px;height:84px;
+    border-radius:26px;
+    background:linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+    margin-bottom:20px;
+    box-shadow:0 10px 40px -8px rgba(168,85,247,0.55);
+  }
+  .hero .mark span{font-size:38px;}
+  .hero .mark .star-badge{
+    position:absolute;
+    top:-8px;right:-8px;
+    width:22px;height:22px;
+    color:var(--blue);
+    filter:drop-shadow(0 0 6px rgba(56,189,248,.8));
+  }
+  .hero h1{
+    font-family:'Baloo 2',sans-serif;
+    font-size:30px;
+    font-weight:700;
+    margin:0 0 8px;
+    background:linear-gradient(135deg, var(--purple-soft), var(--blue));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.tagline{
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.7;
+    margin:0 auto;
+    max-width:420px;
+  }
+
+  section{margin-bottom:52px;}
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif;
+    font-size:13px;
+    font-weight:700;
+    color:var(--purple-soft);
+    margin:0 0 14px;
+  }
+  h2.title{
+    font-family:'Baloo 2',sans-serif;
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 18px;
+    color:var(--text);
+  }
+  p{line-height:1.85;color:var(--muted);font-size:15px;margin:0 0 14px;}
+  p:last-child{margin-bottom:0;}
+  strong{color:var(--text);font-weight:600;}
+
+  /* timeline (growth story) */
+  .timeline{
+    position:relative;
+    padding-left:26px;
+    border-left:2px solid rgba(168,85,247,0.25);
+  }
+  .t-item{position:relative;padding-bottom:30px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:'';
+    position:absolute;
+    left:-32px;top:3px;
+    width:12px;height:12px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--purple), var(--blue));
+    box-shadow:0 0 0 4px rgba(168,85,247,0.15);
+  }
+  .t-date{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--blue);
+    margin-bottom:6px;
+  }
+  .t-item p{margin-bottom:0;}
+  .stat-row{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    background:rgba(168,85,247,0.08);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:8px 12px;
+    font-size:13px;
+    color:var(--text);
+  }
+  .stat b{color:var(--purple-soft);}
+
+  /* vee spotlight card */
+  .vee-card{
+    background:linear-gradient(160deg, rgba(168,85,247,0.12), rgba(56,189,248,0.06));
+    border:1px solid var(--card-border);
+    border-radius:24px;
+    padding:26px;
+  }
+  .vee-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .vee-icon{
+    width:52px;height:52px;
+    flex-shrink:0;
+    border-radius:16px;
+    background:#1c1030;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .vee-name{
+    font-family:'Baloo 2',sans-serif;
+    font-size:17px;
+    font-weight:700;
+    color:var(--text);
+  }
+  .vee-sub{font-size:12px;color:var(--muted-2);}
+  .vee-card p{color:#c9c2e0;}
+  .credit{
+    font-size:11px;
+    color:var(--muted-2);
+    margin-top:10px;
+    font-style:italic;
+  }
+
+  /* profile facts */
+  .fact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .fact{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:14px 16px;
+  }
+  .fact .k{
+    font-size:11px;
+    color:var(--muted-2);
+    margin-bottom:4px;
+  }
+  .fact .v{
+    font-size:14px;
+    font-weight:600;
+    color:var(--text);
+  }
+
+  /* name/logo story */
+  .split{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .split .block{
+    padding-left:16px;
+    border-left:2px solid var(--card-border);
+  }
+  .block h3{
+    font-family:'Baloo 2',sans-serif;
+    font-size:15px;
+    margin:0 0 8px;
+    color:var(--purple-soft);
+    font-weight:600;
+  }
+  .block p{margin-bottom:0;font-size:14px;}
+
+  /* wishlist */
+  .wishlist{
+    list-style:none;
+    margin:0;padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .wishlist li{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:14px;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .wishlist li:hover{
+    transform:translateX(4px);
+    border-color:rgba(168,85,247,0.5);
+  }
+  .wishlist li svg{width:16px;height:16px;color:var(--blue);flex-shrink:0;}
+
+  /* motto */
+  .motto{
+    text-align:center;
+    padding:40px 24px;
+    border-radius:24px;
+    background:linear-gradient(160deg, rgba(168,85,247,0.16), rgba(56,189,248,0.08));
+    border:1px solid var(--card-border);
+  }
+  .motto blockquote{
+    margin:0 0 16px;
+    font-family:'Baloo 2',sans-serif;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--text);
+    font-weight:500;
+  }
+  .motto p{color:var(--muted);font-size:13px;margin:0;}
+
+  footer{
+    text-align:center;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.06);
+    color:var(--muted-2);
+    font-size:12px;
+    line-height:1.8;
+  }
+
+  [data-lang]{display:none;}
+  body.lang-ja [data-lang="ja"]{display:block;}
+  body.lang-ja span[data-lang="ja"]{display:inline;}
+  body.lang-en [data-lang="en"]{display:block;}
+  body.lang-en span[data-lang="en"]{display:inline;}
+
+  @media (max-width:420px){
+    .fact-grid{grid-template-columns:1fr 1fr;}
+    .hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body class="lang-ja">
+
+<div id="stars"></div>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span data-lang="ja">もどる</span><span data-lang="en">Back</span>
+    </a>
+    <div class="lang-toggle">
+      <button id="btn-ja" onclick="setLang('ja')">JP</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:36px;height:36px;color:#fff;"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>
+    </div>
+    <h1>Yokukichi.and.capybara</h1>
+    <p class="tagline" data-lang="ja">2024年からedit動画を続けるクリエイター。Dandy's Worldのedit動画を中心に、少しずつファンの輪を広げています。</p>
+    <p class="tagline" data-lang="en">A creator making edit videos since 2024 — mostly Dandy's World edits — one video, one follower at a time.</p>
+  </div>
+
+  <section>
+    <p class="eyebrow" data-lang="ja">歩み</p>
+    <p class="eyebrow" data-lang="en">The story so far</p>
+    <h2 class="title" data-lang="ja">70人から、25,000人へ</h2>
+    <h2 class="title" data-lang="en">From 70 to 25,000</h2>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">2024</div>
+        <p data-lang="ja">Yokukichi.and.capybaraの活動をスタート。当時のフォロワーはわずか<strong>約70人</strong>だった。</p>
+        <p data-lang="en">Yokukichi.and.capybara began. Back then the account had only <strong>around 70 followers</strong>.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-date" data-lang="ja">2024年以前〜2024年12月</div>
+        <div class="t-date" data-lang="en">Before Dec 2024</div>
+        <p data-lang="ja">最初はミーム系動画を投稿。再生数は平均<strong>約200回</strong>ほどで、思うように伸びず落ち込むこともあったが、投稿をやめなかった。</p>
+        <p data-lang="en">Early videos were meme-style content, averaging only <strong>around 200 views</strong>. It was sometimes disappointing, but Yokukichi never stopped posting.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-date" data-lang="ja">2024年10月下旬</div>
+        <div class="t-date" data-lang="en">Late Oct 2024</div>
+        <p data-lang="ja">PS4版「Dandy's World」をプレイし始める。トゥーンを購入し、イコルを集めながら純粋にゲームを楽しんでいた。</p>
+        <p data-lang="en">Started playing Dandy's World on PS4 — buying Toons, collecting Ichor, and simply enjoying the game.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-date" data-lang="ja">2024年12月中旬</div>
+        <div class="t-date" data-lang="en">Mid-Dec 2024</div>
+        <p data-lang="ja">初めてDandy's World関連の動画を投稿。それでも再生数は<strong>約1,000回</strong>程度だった。</p>
+        <p data-lang="en">Posted Dandy's World content for the first time — though views were still only around <strong>1,000</strong>.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-date" data-lang="ja">2025年6月 — 転機</div>
+        <div class="t-date" data-lang="en">June 2025 — the turning point</div>
+        <p data-lang="ja">初めての本格的なedit動画を投稿。これが大きな転機となった。</p>
+        <p data-lang="en">Uploaded the very first proper edit video. It changed everything.</p>
+        <div class="stat-row">
+          <div class="stat"><b>100,000</b> <span data-lang="ja">回再生</span><span data-lang="en">views</span></div>
+          <div class="stat"><b>10,000</b> <span data-lang="ja">いいね</span><span data-lang="en">likes</span></div>
+          <div class="stat">+<b>3,000</b> <span data-lang="ja">フォロワー</span><span data-lang="en">followers</span></div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-date" data-lang="ja">今日まで</div>
+        <div class="t-date" data-lang="en">Today</div>
+        <p data-lang="ja">それ以来、edit動画を作り続けながら、クオリティの向上とアップグレードに挑戦し続けている。フォロワーは<strong>約25,000人</strong>に。</p>
+        <p data-lang="en">Since then, Yokukichi has kept making edit videos while constantly improving the craft — growing to <strong>around 25,000 followers</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow" data-lang="ja">推し</p>
+    <p class="eyebrow" data-lang="en">The favorite</p>
+    <h2 class="title" data-lang="ja">推しトゥーンは、Vee</h2>
+    <h2 class="title" data-lang="en">Favorite Toon: Vee</h2>
+
+    <div class="vee-card">
+      <div class="vee-head">
+        <div class="vee-icon">📺</div>
+        <div>
+          <div class="vee-name">Vee</div>
+          <div class="vee-sub" data-lang="ja">Dandy's Worldより</div>
+          <div class="vee-sub" data-lang="en">from Dandy's World</div>
+        </div>
+      </div>
+      <p data-lang="ja">Yokukichiが自称「Veeの一番のファン」というほど溺愛しているキャラクター。旅行や遠出をするときは、Dandy's World公式サイトで購入したVeeのエナメルピンをバッグに付けていく。プロフィール画像、壁紙、キーボードの背景、ウィジェットまで、デジタルライフのあらゆる場所にVeeが登場する。</p>
+      <p data-lang="en">Yokukichi absolutely loves Vee and often jokes about being Vee's biggest fan — carrying a Vee enamel pin (bought from the official Dandy's World site) on every trip, and keeping Vee everywhere in daily digital life: profile picture, wallpaper, keyboard background, widgets.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow" data-lang="ja">プロフィール</p>
+    <p class="eyebrow" data-lang="en">Profile</p>
+    <h2 class="title" data-lang="ja">Yokukichiについて</h2>
+    <h2 class="title" data-lang="en">About Yokukichi</h2>
+    <p data-lang="ja">日本在住。「Yokukichi」というニックネームは、子どもの頃から大好きだったカピバラにちなんで「Yokukichi.and.capybara」になった。</p>
+    <p data-lang="en">Based in Japan. The name "Yokukichi" comes from a childhood love of capybaras — which is how "Yokukichi.and.capybara" was born.</p>
+
+    <div class="fact-grid" style="margin-top:16px;">
+      <div class="fact">
+        <div class="k" data-lang="ja">主な投稿</div>
+        <div class="k" data-lang="en">Mainly posts</div>
+        <div class="v" data-lang="ja">Dandy's World edit動画</div>
+        <div class="v" data-lang="en">Dandy's World edits</div>
+      </div>
+      <div class="fact">
+        <div class="k" data-lang="ja">編集ツール</div>
+        <div class="k" data-lang="en">Editing with</div>
+        <div class="v">Alight Motion</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;" data-lang="ja">たまにAnimal Hospitalの動画も投稿するが、編集がかなり大変で時間もかかるため、頻度は控えめ。</p>
+    <p style="margin-top:16px;" data-lang="en">Occasionally posts Animal Hospital videos too, but that content is much harder and more time-consuming to edit, so it doesn't happen often.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow" data-lang="ja">名前とロゴ</p>
+    <p class="eyebrow" data-lang="en">Name & logo</p>
+    <h2 class="title" data-lang="ja">なぜ「星」なのか</h2>
+    <h2 class="title" data-lang="en">Why a star?</h2>
+    <div class="split">
+      <div class="block">
+        <h3 data-lang="ja">ロゴの色</h3>
+        <h3 data-lang="en">The colors</h3>
+        <p data-lang="ja">ロゴは紫と水色のグラデーション。どちらもYokukichiのお気に入りの色。</p>
+        <p data-lang="en">The logo fades between purple and light blue — two of Yokukichi's favorite colors.</p>
+      </div>
+      <div class="block">
+        <h3 data-lang="ja">右上の星</h3>
+        <h3 data-lang="en">The star in the corner</h3>
+        <p data-lang="ja">空には数えきれないほどの星がある。それと同じように、たくさんの動画を作って届けたい——そしていつか誰かに見つけてもらい、楽しんでもらえたら、という願いが込められている。</p>
+        <p data-lang="en">There are countless stars in the sky — and Yokukichi wants to create and post just as many videos, hoping many people will discover and enjoy them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow" data-lang="ja">夢</p>
+    <p class="eyebrow" data-lang="en">The dream</p>
+    <h2 class="title" data-lang="ja">これから挑戦したいこと</h2>
+    <h2 class="title" data-lang="en">What's next</h2>
+    <p data-lang="ja">Yokukichiの夢は、PCを手に入れてBlender 3Dを本格的に学ぶこと。学んだ技術を編集に活かしながら、アナログホラー作品にも挑戦したいと考えている。将来的には、3D・動画編集・アニメーション・アナログホラーに関わる分野で活動していくことが目標。</p>
+    <p data-lang="en">Yokukichi's dream is to get a PC and seriously learn Blender 3D — using it to level up edits and take on analog horror projects. Down the road, the goal is to work somewhere in 3D, video editing, animation, or analog horror.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow" data-lang="ja">欲しいものリスト</p>
+    <p class="eyebrow" data-lang="en">Wishlist</p>
+    <h2 class="title" data-lang="ja">今、欲しいもの</h2>
+    <h2 class="title" data-lang="en">Things on the list</h2>
+    <ul class="wishlist">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>iPhone 18 Pro</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>iPad Pro M5 11-inch</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>GEEKOM A9</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>DJI Osmo Action 6</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>DJI Mic Mini 2S</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg><span data-lang="ja">Dandy's World の Vee グッズ</span><span data-lang="en">Vee merchandise from Dandy's World</span></li>
+    </ul>
+  </section>
+
+  <section class="motto">
+    <blockquote data-lang="ja">「夢を追いかければ、失敗はつきもの。それでも追いかけ続ければ、いつか成功できる。だから、諦めないで。」</blockquote>
+    <blockquote data-lang="en">"When you chase your dreams, failure is inevitable. But if you keep chasing them, you can eventually succeed. So never give up."</blockquote>
+    <p data-lang="ja">うまくいかない時も、前を向いて夢を追い続けてほしい——それがYokukichiからのメッセージ。</p>
+    <p data-lang="en">Even when things don't go well, keep moving forward and keep pursuing your dreams — that's the message Yokukichi wants to share.</p>
+  </section>
+
+  <footer>
+    <div>© Yokukichi.and.capybara</div>
+    <div data-lang="ja">このサイトはAIで作られたものです。</div>
+    <div data-lang="en">This website was created with AI.</div>
+  </footer>
+
+</div>
+
+<script>
+  // stars background
+  const starField = document.getElementById('stars');
+  const starCount = 60;
+  for(let i=0;i<starCount;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2 + 1;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*4)+'s, '+(Math.random()*40)+'s';
+    starField.appendChild(s);
+  }
+
+  function setLang(lang){
+    document.body.classList.remove('lang-ja','lang-en');
+    document.body.classList.add('lang-'+lang);
+    document.getElementById('btn-ja').classList.toggle('active', lang==='ja');
+    document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    try{ localStorage.setItem('ykc-lang', lang); }catch(e){}
+  }
+
+  (function(){
+    let saved = 'ja';
+    try{ saved = localStorage.getItem('ykc-lang') || 'ja'; }catch(e){}
+    setLang(saved);
+  })();
+</script>
+
+</body>
+</html>
